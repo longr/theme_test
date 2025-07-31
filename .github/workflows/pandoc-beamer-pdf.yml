@@ -60,7 +60,7 @@ jobs:
         name: beamer-pdf
         path: presentation.pdf
 
-deploy_to_gh_pages:
+  deploy_to_gh_pages:
     needs: build_pdf
     runs-on: ubuntu-latest
     if: success()

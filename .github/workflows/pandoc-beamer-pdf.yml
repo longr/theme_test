@@ -1,4 +1,4 @@
-name: Pandoc Markdown to Beamer PDF (Containerized)
+name: Pandoc Markdown to Beamer PDF (Simplified Run)
 
 on:
   push:
@@ -9,38 +9,38 @@ on:
 jobs:
   build_pdf:
     runs-on: ubuntu-latest
-    container: pandoc/latex:2.19
+    container: pandoc/latex:2.19 # Or your preferred specific Pandoc/LaTeX container
     permissions:
-      contents: write # This grants write access to the repository contents
-      pages: write    # Required for the peaceiris/actions-gh-pages action to publish to GitHub Pages
-      id-token: write # Required for some GitHub Pages deployments (e.g., if using OIDC)
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
-    - name: Install make
-      run: |
-        apt-get update && apt-get install -y make # Install make inside the container
 
-    - name: Run Makefile target 'md2pdf'
+    - name: Compile PDF with Pandoc
       run: |
-        make md2pdf
+        # IMPORTANT: Replace 'presentation.md' and 'presentation.pdf' with your actual filenames.
+        # Ensure 'ukceh.latex' exists in your repository's root, or provide its full path.
+        pandoc -s --template ukceh.latex -o slides.pdf slides.md --to=beamer
+        # Add any other pandoc options here if needed, e.g.:
+        # --citeproc --bibliography=references.bib
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v4
       with:
         name: beamer-pdf
-        path: presentation.pdf
+        path: slides.pdf # This must match the -o output file name above
 
   deploy_to_gh_pages:
     needs: build_pdf
     runs-on: ubuntu-latest
     if: success()
     permissions:
-      contents: write # This job also needs write access to deploy
+      contents: write
       pages: write
-      id-token: write # peaceiris/actions-gh-pages uses this internally
+      id-token: write
 
     steps:
     - name: Checkout repository

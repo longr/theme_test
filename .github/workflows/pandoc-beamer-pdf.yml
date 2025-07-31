@@ -1,15 +1,16 @@
-name: Pandoc Markdown to Beamer PDF (Simplified Run)
+name: Pandoc Markdown to Beamer PDF (Robust Build)
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main # Trigger on push to the 'main' branch (or your default branch)
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   build_pdf:
     runs-on: ubuntu-latest
-    container: pandoc/latex:2.19 # Or your preferred specific Pandoc/LaTeX container
+    # Switch to a standard Ubuntu container where apt is guaranteed
+    container: ubuntu:latest
     permissions:
       contents: write
       pages: write
@@ -19,25 +20,37 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Missing LaTeX Packages (pgf)
+    - name: Install Pandoc, Full TeX Live, and build essentials
       run: |
-        # Use 'apt' to install texlive-pictures, which contains pgfopts.sty
-        # Fallback to apt-get if 'apt' isn't found (though 'apt' is more modern)
-        if command -v apt; then
-          apt update && apt install -y texlive-pictures
-        elif command -v apt-get; then
-          apt-get update && apt-get install -y texlive-pictures
-        else
-          echo "Neither apt nor apt-get found. Cannot install missing LaTeX packages."
-          exit 1
-        fi
+        # Update package lists
+        apt update
 
+        # Install necessary packages:
+        # pandoc: The Markdown converter
+        # texlive-full: Comprehensive TeX Live distribution (includes Beamer, pgf, etc.)
+        #               NOTE: This is a very large install and will take several minutes.
+        # build-essential: Often helpful for compiling other tools, includes 'make'
+        # git: Needed by actions/checkout sometimes, good to have.
+        apt install -y pandoc texlive-full build-essential git
+
+        # If texlive-full is too slow, you can try a more selective install:
+        # apt install -y pandoc \
+        #   texlive-latex-base \
+        #   texlive-latex-extra \
+        #   texlive-fonts-recommended \
+        #   texlive-pictures \
+        #   texlive-binaries \
+        #   texlive-science \
+        #   texlive-xetex \
+        #   texlive-luatex \
+        #   texlive-lang-european \
+        #   make # make is included in build-essential, but keeping for clarity if you switch
 
     - name: Compile PDF with Pandoc
       run: |
         # IMPORTANT: Replace 'presentation.md' and 'presentation.pdf' with your actual filenames.
         # Ensure 'ukceh.latex' exists in your repository's root, or provide its full path.
-        pandoc -s --template ukceh.latex -o slides.pdf slides.md --to=beamer
+        pandoc -s --template ukceh.latex -o presentation.pdf slides.md --to=beamer
         # Add any other pandoc options here if needed, e.g.:
         # --citeproc --bibliography=references.bib
 
@@ -45,7 +58,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: beamer-pdf
-        path: slides.pdf # This must match the -o output file name above
+        path: presentation.pdf
 
   deploy_to_gh_pages:
     needs: build_pdf

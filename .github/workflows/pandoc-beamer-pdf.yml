@@ -59,7 +59,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: beamer-pdf
-        path: presentation.pdf
+        path: presentation/presentation.pdf
 
   deploy_to_gh_pages:
     needs: build_pdf

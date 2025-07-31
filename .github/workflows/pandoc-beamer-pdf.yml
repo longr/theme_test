@@ -76,12 +76,6 @@ jobs:
         name: beamer-pdf
         path: ./publish_root # Download the PDF into a temporary directory
 
-    # Optional: Configure Git for better commit attribution on the gh-pages branch
-    - name: Configure Git
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:

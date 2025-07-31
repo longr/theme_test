@@ -7,8 +7,13 @@ on:
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  build_pdf:
+   build_pdf:
     runs-on: ubuntu-latest
+    container: pandoc/latex:2.19
+    permissions:
+      contents: write # This grants write access to the repository contents
+      pages: write    # Required for the peaceiris/actions-gh-pages action to publish to GitHub Pages
+      id-token: write # Required for some GitHub Pages deployments (e.g., if using OIDC)
 
     steps:
     - name: Checkout repository

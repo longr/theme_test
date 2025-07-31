@@ -50,6 +50,7 @@ jobs:
       run: |
         cd presentation
         ls
+        ls assets
         # IMPORTANT: Replace 'presentation.md' and 'presentation.pdf' with your actual filenames.
         # Ensure 'ukceh.latex' exists in your repository's root, or provide its full path.
         pandoc -s --template ukceh.latex -o presentation.pdf slides.md --to=beamer

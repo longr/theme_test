@@ -23,7 +23,7 @@ jobs:
     - name: Install Pandoc, Full TeX Live, and build essentials
       run: |
         # Update package lists
-        apt update
+        #####apt update
 
         # Install necessary packages:
         # pandoc: The Markdown converter
@@ -31,7 +31,7 @@ jobs:
         #               NOTE: This is a very large install and will take several minutes.
         # build-essential: Often helpful for compiling other tools, includes 'make'
         # git: Needed by actions/checkout sometimes, good to have.
-        apt install -y pandoc texlive-full build-essential git
+        #### apt install -y pandoc texlive-full build-essential git
 
         # If texlive-full is too slow, you can try a more selective install:
         # apt install -y pandoc \
@@ -49,6 +49,8 @@ jobs:
     - name: Compile PDF with Pandoc
       run: |
         cd presentation
+        ls
+        ls assets
         # IMPORTANT: Replace 'presentation.md' and 'presentation.pdf' with your actual filenames.
         # Ensure 'ukceh.latex' exists in your repository's root, or provide its full path.
         pandoc -s --template ukceh.latex -o presentation.pdf slides.md --to=beamer

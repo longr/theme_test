@@ -60,27 +60,30 @@ jobs:
         name: beamer-pdf
         path: presentation.pdf
 
-  deploy_to_gh_pages:
+deploy_to_gh_pages:
     needs: build_pdf
     runs-on: ubuntu-latest
     if: success()
     permissions:
-      contents: write
-      pages: write
-      id-token: write
+      contents: write # Needed to push to gh-pages branch
+      pages: write    # Official permission for GitHub Pages
+      id-token: write # Often needed for GH Pages internal auth
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
     - name: Download PDF artifact
       uses: actions/download-artifact@v4
       with:
         name: beamer-pdf
-        path: .
+        path: ./publish_root # Download the PDF into a temporary directory
+
+    # Optional: Configure Git for better commit attribution on the gh-pages branch
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+        publish_dir: ./publish_root # Publish ONLY the content of this temporary directory

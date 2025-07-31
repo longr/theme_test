@@ -1,0 +1,88 @@
+%%
+%% This is file `beamerthemeukceh.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% beamerthemeukceh.dtx  (with options: `package')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from beamerthemeukceh.sty.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file beamerthemeukceh.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeukceh}[2025-04-01 v1.0.1 Moloch theme] % x-release-please-version
+\RequirePackage{pgfopts}
+\RequirePackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\setlength{\parskip}{0.35em} 
+\linespread{0.9}
+
+\AtEndDocument{%
+  \makefinish
+}
+
+\pgfkeys{/ukceh/.cd,
+  .search also={
+      /ukceh/inner,
+      /ukceh/outer,
+      /ukceh/color,
+      /ukceh/font,
+    }
+}
+\pgfkeys{
+  /ukceh/titleformat plain/.cd,
+  .is choice,
+  regular/.code={%
+      \let\ukceh@plaintitleformat\@empty%
+      \setbeamerfont{standout}{shape=\normalfont}%
+    },
+  smallcaps/.code={%
+      \let\ukceh@plaintitleformat\@empty%
+      \setbeamerfont{standout}{shape=\scshape}%
+    },
+  allsmallcaps/.code={%
+      \let\ukceh@plaintitleformat\MakeLowercase%
+      \setbeamerfont{standout}{shape=\scshape}%
+    },
+  allcaps/.code={%
+      \let\ukceh@plaintitleformat\MakeUppercase%
+      \setbeamerfont{standout}{shape=\normalfont}%
+    },
+}
+\pgfkeys{
+  /ukceh/titleformat/.code=\pgfkeysalso{
+    font/titleformat title=#1,
+    font/titleformat subtitle=#1,
+    font/titleformat section=#1,
+    font/titleformat frame=#1,
+    titleformat plain=#1,
+  }
+}
+\newcommand{\ukceh@setdefaults}{
+  \pgfkeys{/ukceh/.cd,
+    titleformat plain=regular,
+  }
+}
+\useinnertheme{ukceh}
+\useoutertheme{ukceh}
+\usecolortheme{ukceh}
+\usefonttheme{ukceh}
+\newcommand{\ukcehset}[1]{\pgfkeys{/ukceh/.cd,#1}}
+\newcommand{\mreducelistspacing}{\vspace{-\topsep}}
+\ukceh@setdefaults
+\ProcessPgfOptions{/ukceh}
+\endinput
+%%
+%% End of file `beamerthemeukceh.sty'.

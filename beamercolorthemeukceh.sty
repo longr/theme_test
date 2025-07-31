@@ -1,0 +1,155 @@
+%%
+%% This is file `beamercolorthemeukceh.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% beamercolorthemeukceh.dtx  (with options: `package')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from beamercolorthemeukceh.sty.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file beamercolorthemeukceh.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%% ---------------------------------------------------------------------------
+%% Copyright 2024 Johan Larsson and contributors
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemeukceh}[2025-04-01 v1.0.1 Moloch color theme] % x-release-please-version
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /ukceh/color/block/.cd,
+  .is choice,
+  transparent/.code=\ukceh@block@transparent,
+  fill/.code=\ukceh@block@fill,
+}
+\pgfkeys{
+  /ukceh/color/background/.cd,
+  .is choice,
+  dark/.code=\ukceh@colors@dark,
+  light/.code=\ukceh@colors@light,
+}
+\newcommand{\ukceh@color@setdefaults}{
+  \pgfkeys{/ukceh/color/.cd,
+    background=light,
+  }
+}
+
+%temp define colours:
+\definecolor{ceh_blue}{HTML}{0076bd} % light gray
+\definecolor{ceh_teal}{HTML}{0483a4} 
+\definecolor{ceh_grey}{HTML}{ececec} 
+
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{23373b}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{RGB}{0,128,128}
+\newcommand{\ukceh@colors@dark}{
+  \setbeamercolor{normal text}{%
+    fg=black!2,
+    bg=mDarkTeal
+  }
+  \usebeamercolor[fg]{normal text}
+}
+\newcommand{\ukceh@colors@light}{
+  \setbeamercolor{normal text}{%
+    fg=mDarkTeal,
+    bg=black!2
+  }
+}
+\setbeamercolor{background canvas}{bg=ceh_grey}  % or any color
+\setbeamercolor{alerted text}{%
+  fg=mLightBrown
+}
+\setbeamercolor{example text}{%
+  fg=mLightGreen
+}
+\setbeamercolor{titlelike}{use=normal text, parent=normal text, fg=white}
+\setbeamercolor{author}{use=normal text, parent=normal text, fg=white}
+\setbeamercolor{date}{use=normal text, parent=normal text, fg=white}
+\setbeamercolor{institute}{%
+  use=normal text, fg=white}
+\setbeamercolor{structure}{use=normal text, fg=normal text.fg}
+\setbeamercolor{thanks}{%
+  use=normal text,fg=normal text.fg!80!normal text.bg}
+\setbeamercolor{palette primary}{%
+  use=normal text,
+  fg=ceh_teal,
+  bg=
+}
+\setbeamercolor{frametitle}{%
+  use=palette primary,
+  parent=palette primary
+}
+\setbeamercolor{progress bar}{%
+  use=alerted text,
+  fg=alerted text.fg,
+  bg=alerted text.fg!50!black!30
+}
+\setbeamercolor{title separator}{
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in head/foot}{%
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in section page}{
+  use=progress bar,
+  parent=progress bar
+}
+\newcommand{\ukceh@block@transparent}{
+  \setbeamercolor{block title}{bg=}
+  \setbeamercolor{block body}{bg=}
+  \setbeamercolor{block title alerted}{bg=}
+  \setbeamercolor{block title example}{bg=}
+}
+\newcommand{\ukceh@block@fill}{
+  \setbeamercolor{block title}{%
+    bg=normal text.bg!80!fg
+  }
+  \setbeamercolor{block body}{%
+    use=block title,
+    bg=block title.bg!50!normal text.bg
+  }
+  \setbeamercolor{block title alerted}{%
+    bg=block title.bg,
+  }
+  \setbeamercolor{block title example}{%
+    bg=block title.bg,
+  }
+}
+\setbeamercolor{block title}{%
+  use=normal text,
+  fg=normal text.fg
+}
+\setbeamercolor{block title alerted}{%
+  use={block title, alerted text},
+  fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+  use={block title, example text},
+  fg=example text.fg
+}
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
+\setbeamercolor{bibliography entry author}{fg=, bg=}
+\setbeamercolor{bibliography entry title}{fg=, bg=}
+\setbeamercolor{bibliography entry location}{fg=, bg=}
+\setbeamercolor{bibliography entry note}{fg=, bg=}
+\ukceh@color@setdefaults
+\ProcessPgfPackageOptions{/ukceh/color}
+\mode<all>
+\endinput
+%%
+%% End of file `beamercolorthemeukceh.sty'.

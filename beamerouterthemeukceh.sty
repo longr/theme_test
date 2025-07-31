@@ -1,0 +1,196 @@
+%%
+%% This is file `beamerouterthemeukceh.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% beamerouterthemeukceh.dtx  (with options: `package')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from beamerouterthemeukceh.sty.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file beamerouterthemeukceh.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%% ---------------------------------------------------------------------------
+%% Copyright 2024 Johan Larsson and contributors
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemeukceh}[2025-04-01 v1.0.1 Moloch outer theme] % x-release-please-version
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\providecommand{\tikzexternalenable}{}
+\providecommand{\tikzexternaldisable}{}
+\providecommand{\mmzUnmemoizable}{}
+\setbeamersize{text margin left=7mm, text margin right=7mm}
+\pgfkeys{
+  /ukceh/outer/progressbar/.cd,
+  .is choice,
+  none/.code={%
+      \setbeamertemplate{headline}[plain]
+      \setbeamertemplate{frametitle}[plain]
+      \setbeamertemplate{footline}[plain]
+    },
+  head/.code={\pgfkeys{/ukceh/outer/progressbar=none}
+      \addtobeamertemplate{headline}{}{%
+        \usebeamertemplate*{progress bar in head/foot}
+      }
+    },
+  frametitle/.code={\pgfkeys{/ukceh/outer/progressbar=none}
+      \addtobeamertemplate{frametitle}{}{%
+        \usebeamertemplate*{progress bar in head/foot}
+      }
+    },
+  foot/.code={\pgfkeys{/ukceh/outer/progressbar=none}
+      \addtobeamertemplate{footline}{}{%
+        \usebeamertemplate*{progress bar in head/foot}%
+      }
+    },
+}
+\newlength{\ukceh@progressonsectionpage}
+\newlength{\ukceh@progressonsectionpage@linewidth}
+\newlength{\ukceh@progressinheadfoot}
+\newlength{\ukceh@progressinheadfoot@linewidth}
+\pgfkeys{
+  /ukceh/outer/.cd,
+  progressbarlinewidth/.code={
+      \setlength{\ukceh@progressonsectionpage@linewidth}{#1}
+      \setlength{\ukceh@progressinheadfoot@linewidth}{#1}
+    },
+  progressbarlinewidth/.default=0.4pt,
+}
+\pgfkeys{
+  /ukceh/outer/.cd,
+  progressbar linewidth/.code=\pgfkeysalso{progressbarlinewidth=#1},
+}
+\newcommand{\ukceh@outer@setdefaults}{
+  \pgfkeys{/ukceh/outer/.cd,
+    progressbar=none,
+    progressbar linewidth=0.4pt,
+  }
+}
+\pgfkeys{
+  /ukceh/outer/numbering/.cd,
+  .is choice,
+  none/.code={%
+      \PackageWarning{ukceh}{The ``numbering'' option is deprecated.
+        Use beamer's ``page number in head/foot'' template instead}%
+      \setbeamertemplate{page number in head/foot}[default]
+    },
+  counter/.code={%
+      \PackageWarning{ukceh}{The ``numbering'' option is deprecated.
+        Use beamer's ``page number in head/foot'' template instead}%
+      \setbeamertemplate{page number in head/foot}[framenumber]
+    },
+  fraction/.code={%
+      \PackageWarning{ukceh}{The ``numbering'' option is deprecated.
+        Use beamer's ``page number in head/foot'' template instead}%
+      \setbeamertemplate{page number in head/foot}[totalframenumber]
+    },
+}
+\setbeamertemplate{page number in head/foot}[framenumber]
+\setbeamertemplate{navigation symbols}{}
+\defbeamertemplate{headline}{plain}{}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \vspace{1.3ex}
+  \hbox{%
+    \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.0ex,dp=1.6ex,left]{footline}%
+      \hspace{3.1ex}
+      \vspace{-0.6ex}
+      \includegraphics[height=4.7ex]{assets/logo.png}%
+    \end{beamercolorbox}%
+    % not needed with half fills \hfill % Push everything to the right
+    \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.5ex,dp=1ex,right]{footline}%
+      \usebeamerfont{footline}%
+      \textbf{ceh.ac.uk}%
+      \hspace{1.8ex}%
+      {\color{ceh_blue}\vrule width 0.7pt height 2.5ex depth 3.2ex}%
+      \hspace{-1.1ex}%
+      \makebox[2em][r]{\textbf{\insertframenumber{}}}%makebox should ensure that the ones column
+      %does not move if 1 or 2 digits.
+      \hspace{5.65ex}
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt %ensures Beamer doesn’t add any unintended space or shift layout
+}
+
+\newlength{\ukceh@frametitle@padding}
+\setlength{\ukceh@frametitle@padding}{4.8ex}% space between top of slide and the baseline of the text.
+\newlength{\ukceh@frametitle@bottompadding}
+\setlength{\ukceh@frametitle@bottompadding}{0.75ex} %space after title
+
+\newcommand{\ukceh@frametitlestrut@start}{%
+  \rule{0pt}{\ukceh@frametitle@padding +%
+    \totalheightof{%
+      \ifcsdef{ukceh@frametitleformat}{\ukceh@frametitleformat X}{X}%
+    }%
+  }%
+}
+
+\newcommand{\ukceh@frametitlestrut@end}{%
+  \vphantom{%
+    \rule[-\ukceh@frametitle@bottompadding]{0pt}{\ukceh@frametitle@bottompadding}%
+  }
+}
+\defbeamertemplate{frametitle}{plain}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      leftskip=2.8ex,%  left indent of title
+      rightskip=\the\glueexpr 1.6ex plus 1fil\relax,%
+    ]{frametitle}%
+    \usebeamerfont{frametitle}%
+    \ukceh@frametitlestrut@start%
+    \ukceh@frametitleformat{\insertframetitle}%
+    {%
+      \ifx\insertframesubtitle\@empty%
+        \else%
+        {%
+          \par%
+          \usebeamerfont{framesubtitle}%
+          \vspace{-0.8ex}%
+          \usebeamercolor[fg]{framesubtitle}%
+          \insertframesubtitle%
+        }%
+      \fi
+    }%
+    \ukceh@frametitlestrut@end%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{frametitle continuation}{%
+  \romannumeral\insertcontinuationcount}
+\setbeamertemplate{progress bar in head/foot}{
+  \nointerlineskip%
+  \pgfmathsetlength{\ukceh@progressinheadfoot}{%
+    \paperwidth * min(1,\insertframenumber/\inserttotalframenumber)%
+  }%
+  \begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
+    \tikzexternaldisable%
+    \begin{tikzpicture}
+      \mmzUnmemoizable%
+      \fill[bg]
+      (0,0)
+      rectangle
+      (\paperwidth, \ukceh@progressinheadfoot@linewidth);
+      \fill[fg]
+      (0,0)
+      rectangle
+      (\ukceh@progressinheadfoot, \ukceh@progressinheadfoot@linewidth);
+    \end{tikzpicture}
+    \tikzexternalenable%
+  \end{beamercolorbox}
+}
+\ukceh@outer@setdefaults
+\ProcessPgfPackageOptions{/ukceh/outer}
+\endinput
+%%
+%% End of file `beamerouterthemeukceh.sty'.

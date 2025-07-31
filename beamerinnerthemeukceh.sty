@@ -1,0 +1,447 @@
+%%
+%% This is file `beamerinnerthemeukceh.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% beamerinnerthemeukceh.dtx  (with options: `package')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from beamerinnerthemeukceh.sty.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file beamerinnerthemeukceh.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%% ---------------------------------------------------------------------------
+%% Copyright 2024 Johan Larsson and contributors
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemeukceh}[2025-04-01 v1.0.1 Moloch inner theme] % x-release-please-version
+\RequirePackage{keyval}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\RequirePackage{tikz}
+\providecommand{\tikzexternalenable}{}
+\providecommand{\tikzexternaldisable}{}
+\providecommand{\mmzUnmemoizable}{}
+\pgfkeys{
+  /ukceh/inner/sectionpage/.cd,
+  .is choice,
+  none/.code=\ukceh@disablesectionpage,
+  simple/.code={%
+      \ukceh@enablesectionpage%
+      \setbeamertemplate{section page}[simple]%
+    },
+  progressbar/.code={%
+      \ukceh@enablesectionpage%
+      \setbeamertemplate{section page}[progressbar]%
+    },
+}
+\pgfkeys{
+  /ukceh/inner/subsectionpage/.cd,
+  .is choice,
+  none/.code=\ukceh@disablesubsectionpage,
+  simple/.code={%
+      \ukceh@enablesubsectionpage%
+      \setbeamertemplate{section page}[simple]%
+    },
+  progressbar/.code={%
+      \ukceh@enablesubsectionpage%
+      \setbeamertemplate{section page}[progressbar]%
+    },
+}
+\providebool{ukceh@enableStandoutFooter}
+\providebool{ukceh@enableStandoutNumbering}
+\pgfkeys{
+  /ukceh/inner/standoutnumbering/.cd,
+  .is choice,
+  none/.code={
+      \boolfalse{ukceh@enableStandoutNumbering}
+      \boolfalse{ukceh@enableStandoutFooter}
+    },
+  show/.code={
+      \booltrue{ukceh@enableStandoutNumbering}
+      \booltrue{ukceh@enableStandoutFooter}
+    },
+  hide/.code={
+      \booltrue{ukceh@enableStandoutNumbering}
+      \boolfalse{ukceh@enableStandoutFooter}
+    }
+}
+\newlength{\ukceh@titleseparator@linewidth}
+\pgfkeys{
+  /ukceh/inner/.cd,
+  titleseparatorlinewidth/.code={\setlength{\ukceh@titleseparator@linewidth}{#1}},
+  titleseparatorlinewidth/.default=0.4pt,
+}
+\pgfkeys{
+  /ukceh/inner/.cd,
+  titleseparator linewidth/.code=\pgfkeysalso{titleseparatorlinewidth=#1},
+}
+\newcommand{\ukceh@inner@setdefaults}{
+  \pgfkeys{/ukceh/inner/.cd,
+    sectionpage=progressbar,
+    subsectionpage=none,
+    standoutnumbering=none,
+    titleseparator linewidth=0.4pt,
+  }
+}
+
+\setbeamertemplate{title page}{
+  \null%
+  \vspace{10.7ex}
+  %\ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+  \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+  \usebeamertemplate*{title separator}
+  \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+  \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+  \expandafter\ifblank\expandafter{\beamer@andstripped}{}{%
+    \usebeamertemplate*{author}%
+  }
+  \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+%  \vspace{0pt plus 1fil}%
+%  \null
+}
+
+\newcommand{\backgroundbaseimage}{assets/tree}
+\newcommand{\setbackgroundbaseimage}[1]{\renewcommand{\backgroundbaseimage}{#1}}
+
+\newcommand{\ukcehbackground}[2]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Base background image
+    \node[anchor=north east, outer sep=0pt] at ([xshift=3.45pt, yshift=3.45pt]current page.north east) {%
+      \includegraphics[height=\paperheight]{#1}%
+    };
+    % Transparent overlay image (PDF with transparency)
+    \node[at=(current page.center), inner sep=0] {%
+      \includegraphics[width=\paperwidth,height=\paperheight]{#2}%
+    };
+  \end{tikzpicture}%
+}
+
+
+
+\renewcommand{\maketitle}{%
+  \ifbeamer@inframe
+    \titlepage
+  \else
+    \begingroup
+    \setbeamertemplate{background}{
+      \ukcehbackground{\backgroundbaseimage}{assets/ukceh_green_background.pdf}
+      }
+    \frame[plain,noframenumbering]{\titlepage}
+    \endgroup
+  \fi
+}
+
+\def\titlepage{%
+  % Process the title page
+  \usebeamertemplate{title page}\@thanks
+}
+\setbeamertemplate{title graphic}{
+  \inserttitlegraphic%
+  \par%
+  \vspace*{1em}
+}
+\setbeamertemplate{title}{
+  \begin{minipage}[t][3\baselineskip][t]{0.45\textwidth}
+    \raggedright % or \centering
+    \ukceh@titleformat{\inserttitle}%
+  \end{minipage}
+%  \par%
+}
+\setbeamertemplate{sectionhead}{
+  \begin{minipage}[t][3\baselineskip][t]{0.45\textwidth}
+    \raggedright % or \centering
+        {\usebeamerfont{title}\usebeamercolor[fg]{title}\insertsectionhead}%
+%        \ukceh@titleformat{\insertsectionhead}%
+  \end{minipage}
+%  \par%
+}
+
+
+\setbeamertemplate{subtitle}{
+  \vspace*{0.4em}
+  \begin{minipage}[t][2\baselineskip][t]{0.45\textwidth}
+    \raggedright%
+    \ukceh@subtitleformat{\insertsubtitle}%
+  \end{minipage}
+  \par%
+}
+
+\setbeamertemplate{subsectionhead}{
+  \vspace*{0.4em}
+  \begin{minipage}[t][2\baselineskip][t]{0.45\textwidth}
+    \raggedright%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubsectionhead}%
+%        %\ukceh@subtitleformat{\insertsubsectionhead}%
+  \end{minipage}
+  \par%
+}
+
+
+\setbeamertemplate{title separator}{
+  \tikzexternaldisable%
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \mmzUnmemoizable%
+    \fill[white] (0,0) rectangle (16pt, 0.8pt); %\ukceh@titleseparator@linewidth);
+    \useasboundingbox (0,0) rectangle (\textwidth,-\ukceh@titleseparator@linewidth);
+  \end{tikzpicture}%
+  \tikzexternalenable%
+  \par%
+}
+\setbeamertemplate{author}{
+  \vspace*{0.5em}
+  \raggedright%
+  \insertauthor%
+  \par%
+}
+\setbeamertemplate{institute}{
+  \insertinstitute%
+  \par%
+}
+\setbeamertemplate{date}{
+  \vspace*{0.7em}
+  \insertdate%
+  \par%
+}
+
+\setbeamertemplate{information}{
+  \vspace*{0.em}
+  \begin{minipage}[t][2\baselineskip][t]{0.3\textwidth}
+    \raggedright%
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}%
+      \ukceh@subtitleformat{For more information please contact:}}%
+  \end{minipage}
+  \par%
+}
+
+\setbeamertemplate{email}{
+  \vspace*{0.1em}
+  \raggedright%
+      {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertemail}%
+  \par%
+}
+\setbeamertemplate{handle}{
+  \vspace*{0.1em}
+  \raggedright%
+      {\usebeamerfont{author}\usebeamercolor[fg]{author}\inserthandle}%
+  \par%
+}
+\setbeamertemplate{website}{
+  \vspace*{0.1em}
+  \raggedright%
+      {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertwebsite}%
+  \par%
+}
+
+
+\setbeamertemplate{thankyou}{
+  \begin{minipage}[t][1\baselineskip][t]{0.45\textwidth}
+    \raggedright % or \centering
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}Diolch / Thank you}%
+  \end{minipage}
+  \par%
+}
+\providecommand{\insertemail}{enquiries@ceh.ac.uk}
+\newcommand{\email}[1]{\renewcommand{\insertemail}{#1}}
+
+\providecommand{\insertwebsite}{ceh.ac.uk}
+\newcommand{\website}[1]{\renewcommand{\insertwebsite}{#1}}
+
+\providecommand{\inserthandle}{@uk\_ceh}
+\newcommand{\handle}[1]{\renewcommand{\inserthandle}{#1}}
+
+\newcommand{\makefinish}{%
+  \begingroup
+    \setbeamertemplate{background}{
+      \ukcehbackground{\backgroundbaseimage}{assets/ukceh_green_background.pdf}
+      }
+    \frame[plain,noframenumbering]{
+      \null%
+      \vspace{9.ex}
+      \usebeamertemplate*{thankyou}
+      \usebeamertemplate*{title separator}
+      \usebeamertemplate*{information}
+      \usebeamertemplate*{email}
+      \usebeamertemplate*{handle}
+      \usebeamertemplate*{website}
+      \par%
+    }
+    \endgroup
+}
+
+
+
+\defbeamertemplate{section page}{simple}{
+}
+
+\defbeamertemplate{section page}{background}{
+  \ukcehbackground{\backgroundbaseimage}{assets/ukceh_green_background.pdf}
+}
+
+\defbeamertemplate{section page}{progressbar}{
+  \centering
+  \begin{minipage}{0.7875\linewidth}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \ukceh@sectiontitleformat{\insertsectionhead}\\[-0.5\baselineskip]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \usebeamercolor[fg]{subsection title}%
+    \usebeamerfont{subsection title}%
+    \strut%
+    \ifx\insertsubsectionhead\@empty\else%
+      \insertsubsectionhead%
+    \fi
+  \end{minipage}
+  \par
+}
+
+\newcommand{\ukceh@disablesectionpage}{
+  \AtBeginSection{
+    % intentionally empty
+  }
+}
+\newcommand{\ukceh@enablesectionpage}{
+  \AtBeginSection{
+    \ifbeamer@inframe
+      \sectionpage
+      \else
+        \begingroup
+    \setbeamertemplate{background}{
+      \ukcehbackground{\backgroundbaseimage}{assets/ukceh_blue_background.pdf}
+    }
+    \frame[plain,noframenumbering]{
+  \null%
+  \vspace{10.7ex}
+  %\ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+  \ifx\inserttitle\@empty\else\usebeamertemplate*{sectionhead}\fi
+  \usebeamertemplate*{title separator}
+  \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subsectionhead}\fi
+    }
+    \endgroup
+%      \frame[plain,c,noframenumbering]{\sectionpage}
+    \fi
+  }
+}
+\setbeamertemplate{subsection page}{%
+  \usebeamertemplate*{section page}
+}
+\newcommand{\ukceh@disablesubsectionpage}{
+  \AtBeginSubsection{
+    % intentionally empty
+  }
+}
+\newcommand{\ukceh@enablesubsectionpage}{
+  \AtBeginSubsection{
+    \ifbeamer@inframe
+      \subsectionpage
+      \else
+    \frame[plain,c,noframenumbering]{\subsectionpage}
+    \fi
+  }
+}
+\setbeamertemplate{progress bar in section page}{
+  \pgfmathsetlength{\ukceh@progressonsectionpage}{
+    \textwidth * min(1,\insertframenumber/\inserttotalframenumber)
+  }%
+  \tikzexternaldisable%
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \mmzUnmemoizable%
+    \fill[bg]
+    (0,0)
+    rectangle
+    (\textwidth, \ukceh@progressonsectionpage@linewidth);
+    \fill[fg]
+    (0,0)
+    rectangle
+    (\ukceh@progressonsectionpage,
+    \ukceh@progressonsectionpage@linewidth);
+    \useasboundingbox (0,0) rectangle (\textwidth,-\ukceh@progressonsectionpage@linewidth);
+  \end{tikzpicture}%
+  \tikzexternalenable%
+}
+\def\inserttotalframenumber{100}
+%\setbeamertemplate{itemize item}[circle]{\color{blue}}
+\setbeamertemplate{itemize item}{\color{ceh_teal}{\large\textbullet}} 
+\setbeamertemplate{itemize subitem}{\makebox[0.2em][l]{\color{black}{\normalsize\textbullet}}}
+%\setbeamertemplate{itemize subitem}{\raise1.5pt\hbox{\vrule width 0.8ex height 0.8ex}}
+\setbeamerfont{itemize subsubitem}{size=\tiny}
+\setbeamertemplate{itemize subsubitem}{%
+  \usebeamerfont*{itemize subsubitem}\raise1.75pt\hbox{\donotcoloroutermaths$\blacktriangleright$}%
+}
+
+\setlength{\leftmargini}{0.9em}      % First-level indent
+\setlength{\leftmarginii}{0.97em}      % First-level indent
+\setlength{\labelsep}{0.5em}  % default is ~0.75em or 1em
+%\setlength{\labelsepii}{0.4em}  % default is ~0.75em or 1em
+
+
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{footnote}{%
+  \parindent 0em\noindent\raggedright \usebeamercolor{footnote}\hbox to
+  0.8em{\hfil\insertfootnotemark}\insertfootnotetext%%%
+  \par%
+}
+\define@key{beamerframe}{c}[true]{% centered
+  \beamer@frametopskip=0pt plus 1fil\relax%
+  \beamer@framebottomskip=0pt plus 1fil\relax%
+  \beamer@frametopskipautobreak=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskipautobreak=0pt plus .6\paperheight\relax%
+  \def\beamer@initfirstlineunskip{}%
+}
+\providebool{ukceh@standout}
+\define@key{beamerframe}{standout}[true]{%
+  \booltrue{ukceh@standout}
+  \begingroup
+  \setkeys{beamerframe}{c}
+  \ifbool{ukceh@enableStandoutNumbering}{}{%
+    \setkeys{beamerframe}{noframenumbering}}
+  \ifbeamercolorempty[bg]{palette primary}{
+    \setbeamercolor{background canvas}{
+      use=palette primary,
+      bg=-palette primary.fg
+    }
+  }{
+    \setbeamercolor{background canvas}{
+      use=palette primary,
+      bg=palette primary.bg
+    }
+  }
+  \setbeamercolor{local structure}{
+    fg=palette primary.fg
+  }
+  \usebeamercolor[fg]{palette primary}
+  \setbeamercolor{page number in head/foot}{
+    use=palette primary,
+    fg=palette primary.fg
+  }
+  \ifbool{ukceh@enableStandoutFooter}{}{\setbeamertemplate{footline}{}}
+}
+\pretocmd{\beamer@reseteecodes}{%
+  \ifbool{ukceh@standout}{
+    \endgroup
+    \boolfalse{ukceh@standout}
+  }{}
+}{}{}
+\AtBeginEnvironment{beamer@frameslide}{
+  \ifbool{ukceh@standout}{
+    \centering
+    \usebeamerfont{standout}
+  }{}
+}
+\ukceh@inner@setdefaults
+\ProcessPgfPackageOptions{/ukceh/inner}
+\endinput
+%%
+%% End of file `beamerinnerthemeukceh.sty'.

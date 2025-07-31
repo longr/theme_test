@@ -1,0 +1,52 @@
+name: Pandoc Markdown to Beamer PDF (with Makefile)
+
+on:
+  push:
+    branches:
+      - main # Trigger on push to the 'main' branch (or your default branch)
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  build_pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up TeX Live and Pandoc
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-full pandoc # Ensure these are installed for your makefile to use
+
+    - name: Run Makefile target 'md2pdf'
+      run: |
+        make md2pdf
+      # Ensure your 'md2pdf' target outputs 'presentation.pdf' or whatever your desired output is.
+
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: beamer-pdf
+        path: presentation.pdf # Ensure this matches the output filename from your Makefile
+
+  deploy_to_gh_pages:
+    needs: build_pdf
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download PDF artifact
+      uses: actions:download-artifact@v4
+      with:
+        name: beamer-pdf
+        path: .
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .

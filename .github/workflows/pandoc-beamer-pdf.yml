@@ -19,6 +19,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Install Missing LaTeX Packages (pgf)
+      run: |
+        # Use 'apt' to install texlive-pictures, which contains pgfopts.sty
+        # Fallback to apt-get if 'apt' isn't found (though 'apt' is more modern)
+        if command -v apt; then
+          apt update && apt install -y texlive-pictures
+        elif command -v apt-get; then
+          apt-get update && apt-get install -y texlive-pictures
+        else
+          echo "Neither apt nor apt-get found. Cannot install missing LaTeX packages."
+          exit 1
+        fi
+
+
     - name: Compile PDF with Pandoc
       run: |
         # IMPORTANT: Replace 'presentation.md' and 'presentation.pdf' with your actual filenames.
